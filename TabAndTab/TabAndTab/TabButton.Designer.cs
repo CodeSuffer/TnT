@@ -1,6 +1,6 @@
 ﻿namespace TabAndTab
 {
-    partial class SplitableTabControl
+    partial class TabButton
     {
         /// <summary> 
         /// 필수 디자이너 변수입니다.
@@ -28,19 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.button = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.button)).BeginInit();
             this.SuspendLayout();
             // 
-            // SplitableTabControl
+            // button
+            // 
+            this.button.InitialImage = null;
+            this.button.Location = new System.Drawing.Point(0, 0);
+            this.button.Name = "button";
+            this.button.Size = new System.Drawing.Size(110, 25);
+            this.button.TabIndex = 0;
+            this.button.TabStop = false;
+            // 
+            // TabButton
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.Name = "SplitableTabControl";
-            this.Size = new System.Drawing.Size(300, 223);
+            this.Controls.Add(this.button);
+            this.Name = "TabButton";
+            this.Size = new System.Drawing.Size(110, 25);
+            ((System.ComponentModel.ISupportInitialize)(this.button)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.PictureBox button;
     }
 }

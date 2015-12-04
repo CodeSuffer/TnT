@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace TabAndTab
 {
-    public partial class SplitableTabControl : UserControl
+    public partial class TabBrowser : UserControl
     {
-        public SplitableTabControl()
+        public TabBrowser()
         {
             InitializeComponent();
         }
