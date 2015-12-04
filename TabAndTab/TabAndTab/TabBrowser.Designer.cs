@@ -28,80 +28,41 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.tabButton2 = new TabAndTab.TabButton();
-            this.tabButton1 = new TabAndTab.TabButton();
-            this.browser1 = new TabAndTab.Browser();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
+            this.tabSpliter = new System.Windows.Forms.SplitContainer();
+            ((System.ComponentModel.ISupportInitialize)(this.tabSpliter)).BeginInit();
+            this.tabSpliter.SuspendLayout();
             this.SuspendLayout();
             // 
-            // splitContainer1
+            // tabSpliter
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.tabButton2);
-            this.splitContainer1.Panel1.Controls.Add(this.tabButton1);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.browser1);
-            this.splitContainer1.Panel2MinSize = 270;
-            this.splitContainer1.Size = new System.Drawing.Size(613, 420);
-            this.splitContainer1.SplitterDistance = 26;
-            this.splitContainer1.TabIndex = 0;
-            // 
-            // tabButton2
-            // 
-            this.tabButton2.Location = new System.Drawing.Point(113, 0);
-            this.tabButton2.Name = "tabButton2";
-            this.tabButton2.Size = new System.Drawing.Size(110, 25);
-            this.tabButton2.TabIndex = 0;
-            // 
-            // tabButton1
-            // 
-            this.tabButton1.Location = new System.Drawing.Point(3, 0);
-            this.tabButton1.Name = "tabButton1";
-            this.tabButton1.Size = new System.Drawing.Size(110, 25);
-            this.tabButton1.TabIndex = 0;
-            // 
-            // browser1
-            // 
-            this.browser1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.browser1.Location = new System.Drawing.Point(0, 0);
-            this.browser1.Name = "browser1";
-            this.browser1.Size = new System.Drawing.Size(613, 390);
-            this.browser1.TabIndex = 0;
+            this.tabSpliter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabSpliter.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.tabSpliter.Location = new System.Drawing.Point(0, 0);
+            this.tabSpliter.Name = "tabSpliter";
+            this.tabSpliter.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.tabSpliter.Panel2MinSize = 270;
+            this.tabSpliter.Size = new System.Drawing.Size(613, 420);
+            this.tabSpliter.SplitterDistance = 26;
+            this.tabSpliter.SplitterWidth = 1;
+            this.tabSpliter.TabIndex = 0;
+            this.tabSpliter.TabStop = false;
             // 
             // TabBrowser
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this.tabSpliter);
             this.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.Name = "TabBrowser";
             this.Size = new System.Drawing.Size(613, 420);
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.tabSpliter)).EndInit();
+            this.tabSpliter.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private TabButton tabButton2;
-        private TabButton tabButton1;
-        private Browser browser1;
+        private System.Windows.Forms.SplitContainer tabSpliter;
     }
 }

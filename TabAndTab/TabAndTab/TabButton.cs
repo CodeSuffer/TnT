@@ -10,12 +10,30 @@ using System.Windows.Forms;
 
 namespace TabAndTab
 {
+
     public partial class TabButton : UserControl
     {
+        //variables
         static private Image imageHover;
         static private Image imageClicked;
         static private Image imageUnclicked;
-        ImageStatus imageStatus;
+        private ImageStatus imageStatus;
+        private string buttonText;
+
+        //properties
+        public string ButtonText
+        {
+            get
+            {
+                return buttonText;
+            }
+
+            set
+            {
+                buttonText = value;
+                labelButton.Text = value;
+            }
+        }
 
         public enum ImageStatus
         {
@@ -37,7 +55,17 @@ namespace TabAndTab
             
             button.Click += new EventHandler(buttonMouseClick);
             button.MouseEnter += new EventHandler(buttonMouseHover);
+            button.MouseHover += new EventHandler(buttonMouseHover);
             button.MouseLeave += new EventHandler(buttonMouseLeave);
+
+            labelButton.Click += new EventHandler(buttonMouseClick);
+            labelButton.MouseEnter += new EventHandler(buttonMouseHover);
+            labelButton.MouseHover += new EventHandler(buttonMouseHover);
+        }
+
+        public TabButton(string text) : this()
+        {
+            ButtonText = text;
         }
 
         public void imageChange(ImageStatus status)
@@ -50,6 +78,8 @@ namespace TabAndTab
                 button.Height = imageClicked.Height;
                 button.Width = imageClicked.Width;
                 button.Location = new Point(0, 0);
+
+                this.BringToFront();
             }
             else if(status == ImageStatus.unclicked)
             {
@@ -73,6 +103,7 @@ namespace TabAndTab
 
         private void buttonMouseClick(object sender, EventArgs e)
         {
+            this.OnClick(e);
             if (imageStatus == ImageStatus.unclicked || imageStatus == ImageStatus.hover)
             {
                 imageChange(ImageStatus.clicked);

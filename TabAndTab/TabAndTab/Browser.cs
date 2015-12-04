@@ -16,6 +16,27 @@ namespace TabAndTab
         {
             InitializeComponent();
             browserSplitContainer.Paint += BrowserSplitContainer_Paint;
+
+        }
+
+        public Browser(string address) : this()
+        {
+            Address = address;
+        }
+
+        private string address;
+        public string Address
+        {
+            get
+            {
+                return address;
+            }
+
+            set
+            {
+                address = value;
+                textBoxAddress.Text = value;
+            }
         }
 
         private void BrowserSplitContainer_Paint(object sender, PaintEventArgs e)

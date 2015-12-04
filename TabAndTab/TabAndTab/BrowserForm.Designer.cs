@@ -44,6 +44,10 @@
             this.menuSplitContainer.Location = new System.Drawing.Point(0, 0);
             this.menuSplitContainer.Name = "menuSplitContainer";
             this.menuSplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // menuSplitContainer.Panel1
+            // 
+            this.menuSplitContainer.Panel1.BackColor = System.Drawing.SystemColors.Control;
             this.menuSplitContainer.Panel1MinSize = 50;
             // 
             // menuSplitContainer.Panel2
@@ -54,9 +58,11 @@
             this.menuSplitContainer.SplitterDistance = 51;
             this.menuSplitContainer.SplitterWidth = 1;
             this.menuSplitContainer.TabIndex = 0;
+            this.menuSplitContainer.TabStop = false;
             // 
             // tabBrowser
             // 
+            this.tabBrowser.BackColor = System.Drawing.SystemColors.Window;
             this.tabBrowser.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabBrowser.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.tabBrowser.Location = new System.Drawing.Point(0, 0);

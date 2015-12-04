@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.button = new System.Windows.Forms.PictureBox();
+            this.labelButton = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.button)).BeginInit();
             this.SuspendLayout();
             // 
@@ -41,20 +42,32 @@
             this.button.TabIndex = 0;
             this.button.TabStop = false;
             // 
+            // labelButton
+            // 
+            this.labelButton.AutoSize = true;
+            this.labelButton.BackColor = System.Drawing.Color.Transparent;
+            this.labelButton.Location = new System.Drawing.Point(5, 5);
+            this.labelButton.Name = "labelButton";
+            this.labelButton.Size = new System.Drawing.Size(0, 15);
+            this.labelButton.TabIndex = 1;
+            // 
             // TabButton
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.button);
+            this.button.Controls.Add(this.labelButton);
             this.Name = "TabButton";
             this.Size = new System.Drawing.Size(110, 25);
             ((System.ComponentModel.ISupportInitialize)(this.button)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.PictureBox button;
+        private System.Windows.Forms.Label labelButton;
     }
 }

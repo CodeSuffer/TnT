@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.addressSplitContainer = new System.Windows.Forms.SplitContainer();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBoxAddress = new System.Windows.Forms.TextBox();
             this.browserSplitContainer = new System.Windows.Forms.SplitContainer();
             this.leftFavoritesBar1 = new TabAndTab.LeftFavoritesBar();
             ((System.ComponentModel.ISupportInitialize)(this.addressSplitContainer)).BeginInit();
@@ -52,7 +52,7 @@
             // 
             // addressSplitContainer.Panel1
             // 
-            this.addressSplitContainer.Panel1.Controls.Add(this.textBox1);
+            this.addressSplitContainer.Panel1.Controls.Add(this.textBoxAddress);
             // 
             // addressSplitContainer.Panel2
             // 
@@ -63,13 +63,14 @@
             this.addressSplitContainer.SplitterWidth = 1;
             this.addressSplitContainer.TabIndex = 2;
             // 
-            // textBox1
+            // textBoxAddress
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(0, 0);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(631, 25);
-            this.textBox1.TabIndex = 0;
+            this.textBoxAddress.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBoxAddress.Location = new System.Drawing.Point(0, 0);
+            this.textBoxAddress.Name = "textBoxAddress";
+            this.textBoxAddress.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.textBoxAddress.Size = new System.Drawing.Size(631, 25);
+            this.textBoxAddress.TabIndex = 0;
             // 
             // browserSplitContainer
             // 
@@ -87,7 +88,8 @@
             this.browserSplitContainer.Size = new System.Drawing.Size(631, 401);
             this.browserSplitContainer.SplitterDistance = 151;
             this.browserSplitContainer.SplitterWidth = 1;
-            this.browserSplitContainer.TabIndex = 0;
+            this.browserSplitContainer.TabIndex = 1;
+            this.browserSplitContainer.TabStop = false;
             // 
             // leftFavoritesBar1
             // 
@@ -120,7 +122,7 @@
         #endregion
 
         private System.Windows.Forms.SplitContainer addressSplitContainer;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBoxAddress;
         private System.Windows.Forms.SplitContainer browserSplitContainer;
         private LeftFavoritesBar leftFavoritesBar1;
     }
