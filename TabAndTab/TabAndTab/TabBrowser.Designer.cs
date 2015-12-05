@@ -37,6 +37,7 @@
             // 
             this.tabSpliter.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabSpliter.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.tabSpliter.IsSplitterFixed = true;
             this.tabSpliter.Location = new System.Drawing.Point(0, 0);
             this.tabSpliter.Name = "tabSpliter";
             this.tabSpliter.Orientation = System.Windows.Forms.Orientation.Horizontal;

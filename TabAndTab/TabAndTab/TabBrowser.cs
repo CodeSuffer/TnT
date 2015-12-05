@@ -12,33 +12,28 @@ namespace TabAndTab
 {
     public partial class TabBrowser : UserControl
     {
-        static private int tabMarginLeft = 5; 
-        private List<TabButton> tabs = new List<TabButton>();
-        private List<Browser> browsers = new List<Browser>();
+        private BrowserControl browserControl = new BrowserControl();
+        private TabControl tabControl = new TabControl();
 
         public TabBrowser()
         {
             InitializeComponent();
+            this.tabSpliter.Panel1.Controls.Add(tabControl);
+            browserControl.Dock = DockStyle.Fill;
+            this.tabSpliter.Panel2.Controls.Add(browserControl);
+            tabControl.Click += tabControl_Click;
+
+            tabControl.OnTabOrderChange += TabOrder_Change;
+
             AddBrowser(new Browser("test1"));
             AddBrowser(new Browser("test2"));
             AddBrowser(new Browser("test3"));
         }
 
-        private void tab_Click(object sender, EventArgs e)
+        public void TabOrder_Change(object sender, EventArgs e)
         {
-            int index = tabs.IndexOf((TabButton)sender);
-            foreach(Browser it in browsers)
-            {
-                it.Hide();
-            }
-            browsers[index].Show();
-
-
-            foreach (TabButton it in tabs)
-            {
-                it.imageChange(TabButton.ImageStatus.unclicked);
-            }
-            tabs[index].imageChange(TabButton.ImageStatus.clicked);
+            TabEventArgs tabEvent = (TabEventArgs)e;
+            browserControl.OrderChange(tabEvent.TabOrigin, tabEvent.TabChanged);
         }
 
         public TabBrowser(Browser arg) : this()
@@ -46,23 +41,16 @@ namespace TabAndTab
             AddBrowser(arg);
         }
 
-        public void AddBrowser(Browser arg)
+        private void tabControl_Click(object sender, EventArgs e)
         {
-            browsers.Add(arg);
-            AddNewTab(arg.Address);
-            arg.Location = new Point(0, 0);
-            this.tabSpliter.Panel2.Controls.Add(arg);
-            arg.Hide();
+            int index = ((TabEventArgs)e).TabIndex;
+            browserControl.ShowBrowser(index);
         }
 
-        public void AddNewTab(string directory)
+        public void AddBrowser(Browser arg)
         {
-            TabButton tab = new TabButton(directory);
-
-            tab.Location = new Point(tabMarginLeft + tabs.Count * 109, 0);
-            tab.Click += tab_Click;
-            tabSpliter.Panel1.Controls.Add(tab);
-            tabs.Add(tab);
+            browserControl.AddBrowser(arg);
+            tabControl.AddNewTab(arg.Address);
         }
     }
 }

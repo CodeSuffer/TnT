@@ -16,7 +16,6 @@ namespace TabAndTab
         {
             InitializeComponent();
             browserSplitContainer.Paint += BrowserSplitContainer_Paint;
-
         }
 
         public Browser(string address) : this()

@@ -57,10 +57,12 @@ namespace TabAndTab
             button.MouseEnter += new EventHandler(buttonMouseHover);
             button.MouseHover += new EventHandler(buttonMouseHover);
             button.MouseLeave += new EventHandler(buttonMouseLeave);
-
             labelButton.Click += new EventHandler(buttonMouseClick);
             labelButton.MouseEnter += new EventHandler(buttonMouseHover);
             labelButton.MouseHover += new EventHandler(buttonMouseHover);
+
+            button.MouseDown += buttonMouseDown;
+            labelButton.MouseDown += buttonMouseDown;
         }
 
         public TabButton(string text) : this()
@@ -122,6 +124,10 @@ namespace TabAndTab
             {
                 imageChange(ImageStatus.hover);
             }
+        }
+        private void buttonMouseDown(object sender, MouseEventArgs e)
+        {
+            this.OnMouseDown(e);
         }
     }
 }

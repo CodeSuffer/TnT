@@ -54,7 +54,7 @@
             // 
             this.menuSplitContainer.Panel2.Controls.Add(this.tabBrowser);
             this.menuSplitContainer.Panel2MinSize = 325;
-            this.menuSplitContainer.Size = new System.Drawing.Size(585, 424);
+            this.menuSplitContainer.Size = new System.Drawing.Size(590, 401);
             this.menuSplitContainer.SplitterDistance = 51;
             this.menuSplitContainer.SplitterWidth = 1;
             this.menuSplitContainer.TabIndex = 0;
@@ -67,7 +67,7 @@
             this.tabBrowser.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.tabBrowser.Location = new System.Drawing.Point(0, 0);
             this.tabBrowser.Name = "tabBrowser";
-            this.tabBrowser.Size = new System.Drawing.Size(585, 372);
+            this.tabBrowser.Size = new System.Drawing.Size(590, 349);
             this.tabBrowser.TabIndex = 0;
             // 
             // BrowserForm
@@ -75,7 +75,7 @@
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(585, 424);
+            this.ClientSize = new System.Drawing.Size(590, 401);
             this.Controls.Add(this.menuSplitContainer);
             this.Name = "BrowserForm";
             this.Text = "TabBrowser";

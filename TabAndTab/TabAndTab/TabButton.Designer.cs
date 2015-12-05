@@ -31,10 +31,12 @@
             this.button = new System.Windows.Forms.PictureBox();
             this.labelButton = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.button)).BeginInit();
+            this.button.SuspendLayout();
             this.SuspendLayout();
             // 
             // button
             // 
+            this.button.Controls.Add(this.labelButton);
             this.button.InitialImage = null;
             this.button.Location = new System.Drawing.Point(0, 0);
             this.button.Name = "button";
@@ -53,15 +55,16 @@
             // 
             // TabButton
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.button);
-            this.button.Controls.Add(this.labelButton);
             this.Name = "TabButton";
             this.Size = new System.Drawing.Size(110, 25);
             ((System.ComponentModel.ISupportInitialize)(this.button)).EndInit();
+            this.button.ResumeLayout(false);
+            this.button.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
