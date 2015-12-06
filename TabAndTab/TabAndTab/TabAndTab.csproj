@@ -93,6 +93,8 @@
     <Compile Include="TabControl.Designer.cs">
       <DependentUpon>TabControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="TabIndex.cs" />
+    <Compile Include="TabDragEventArgs.cs" />
     <Compile Include="TabEventArgs.cs" />
     <EmbeddedResource Include="Browser.resx">
       <DependentUpon>Browser.cs</DependentUpon>

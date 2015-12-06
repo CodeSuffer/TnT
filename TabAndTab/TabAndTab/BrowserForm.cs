@@ -12,9 +12,16 @@ namespace TabAndTab
 {
     public partial class BrowserForm : Form
     {
+        TabBrowser tabBrowser;
         public BrowserForm()
         {
             InitializeComponent();
+            tabBrowser = new TabBrowser();
+            tabBrowser.Dock = DockStyle.Fill;
+            tabBrowser.AddBrowser("111111");
+            tabBrowser.AddBrowser("222222");
+            tabBrowser.AddBrowser("333333");
+            this.menuSplitContainer.Panel2.Controls.Add(tabBrowser);
         }
     }
 }

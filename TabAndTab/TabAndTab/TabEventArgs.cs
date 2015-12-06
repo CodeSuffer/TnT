@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TabAndTab
 {
-    class TabEventArgs : EventArgs
+    public class TabEventArgs : EventArgs
     {
         private int tabIndex;
         private int tabOrigin, tabChanged;

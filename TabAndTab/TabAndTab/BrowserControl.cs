@@ -23,7 +23,36 @@ namespace TabAndTab
             arg.Location = new Point(0, 0);
             arg.Dock = DockStyle.Fill;
             this.Controls.Add(arg);
-            arg.Hide();
+        }
+        public void AddBrowser(string arg)
+        {
+            Browser temp = new Browser(arg);
+            browsers.Add(temp);
+            temp.Location = new Point(0, 0);
+            temp.Dock = DockStyle.Fill;
+            this.Controls.Add(temp);
+        }
+        public Browser PopBrowser(int index)
+        {
+            Browser origin = browsers.ElementAt(index);
+            this.Controls.Remove(origin);
+            browsers.RemoveAt(index);
+
+            Browser newSource = browsers.ElementAtOrDefault(index);
+            if (newSource == null)
+            {
+                newSource = browsers.ElementAtOrDefault(index - 1);
+                if (newSource != null) 
+                {
+                    this.ShowBrowser(index - 1);
+                }
+            }
+            else
+            {
+                this.ShowBrowser(index);
+            }
+
+            return origin;
         }
         public void ShowBrowser(int index)
         {
@@ -38,6 +67,10 @@ namespace TabAndTab
             Browser origin = browsers[indexOrigin];
             browsers.Remove(origin);
             browsers.Insert(indexChanged, origin);
+        }
+        public int getIndex(Browser arg)
+        {
+            return browsers.IndexOf(arg);
         }
     }
 }

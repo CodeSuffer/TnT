@@ -36,7 +36,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Name = "TabControl";
-            this.Size = new System.Drawing.Size(1018, 25);
+            this.Size = new System.Drawing.Size(10, 25);
             this.ResumeLayout(false);
 
         }

@@ -21,19 +21,11 @@ namespace TabAndTab
             this.tabSpliter.Panel1.Controls.Add(tabControl);
             browserControl.Dock = DockStyle.Fill;
             this.tabSpliter.Panel2.Controls.Add(browserControl);
-            tabControl.Click += tabControl_Click;
-
-            tabControl.OnTabOrderChange += TabOrder_Change;
-
-            AddBrowser(new Browser("test1"));
-            AddBrowser(new Browser("test2"));
-            AddBrowser(new Browser("test3"));
-        }
-
-        public void TabOrder_Change(object sender, EventArgs e)
-        {
-            TabEventArgs tabEvent = (TabEventArgs)e;
-            browserControl.OrderChange(tabEvent.TabOrigin, tabEvent.TabChanged);
+            tabControl.Dock = DockStyle.Fill;
+            tabControl.OnTabClick += TabControl_Click;
+            tabControl.OnTabOrderChange += TabControl_OrderChange;
+            tabControl.OnTabDraggedOut += TabControl_DraggedOut;
+            tabControl.OnBrowserDragEnter += TabControl_BrowserDragEnter;
         }
 
         public TabBrowser(Browser arg) : this()
@@ -41,9 +33,34 @@ namespace TabAndTab
             AddBrowser(arg);
         }
 
-        private void tabControl_Click(object sender, EventArgs e)
+        private void TabControl_BrowserDragEnter(object sender, DragEventArgs e)
         {
-            int index = ((TabEventArgs)e).TabIndex;
+            Browser temp = (Browser)e.Data.GetData(typeof(Browser));
+            
+            this.AddBrowser(temp);
+
+            int index = browserControl.getIndex(temp);
+            browserControl.ShowBrowser(index);
+            tabControl.ShowTab(index);
+            DoDragDrop(tabControl.GetTab(index), DragDropEffects.Move);
+        }
+
+        private void TabControl_DraggedOut(object sender, TabDragEventArgs e)
+        {
+            Browser temp = browserControl.PopBrowser(e.TabIndex);
+
+            DoDragDrop(temp, DragDropEffects.Copy);
+        }
+
+        private void TabControl_OrderChange(object sender, TabEventArgs e)
+        {
+            browserControl.OrderChange(e.TabOrigin, e.TabChanged);
+        }
+
+        private void TabControl_Click(object sender, TabEventArgs e)
+        {
+            int index = e.TabIndex;
+            tabControl.ShowTab(index);
             browserControl.ShowBrowser(index);
         }
 
@@ -51,6 +68,11 @@ namespace TabAndTab
         {
             browserControl.AddBrowser(arg);
             tabControl.AddNewTab(arg.Address);
+        }
+        public void AddBrowser(string address)
+        {
+            browserControl.AddBrowser(address);
+            tabControl.AddNewTab(address);
         }
     }
 }

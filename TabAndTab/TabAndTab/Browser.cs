@@ -12,10 +12,18 @@ namespace TabAndTab
 {
     public partial class Browser : UserControl
     {
+        static private int splitterPos = 151;
         public Browser()
         {
             InitializeComponent();
             browserSplitContainer.Paint += BrowserSplitContainer_Paint;
+            browserSplitContainer.SplitterMoving += BrowserSplitter_Moving;
+        }
+
+        private void BrowserSplitter_Moving(object sender, SplitterCancelEventArgs e)
+        {
+            splitterPos = e.SplitX;
+            MessageBox.Show(splitterPos+"");
         }
 
         public Browser(string address) : this()
