@@ -13,11 +13,12 @@ namespace TabAndTab
 
     public partial class TabButton : UserControl
     {
+
         //variables
         static private Image imageHover;
         static private Image imageClicked;
         static private Image imageUnclicked;
-        private ImageStatus imageStatus;
+        private ImageStatus status;
         private string buttonText;
 
         //properties
@@ -32,6 +33,20 @@ namespace TabAndTab
             {
                 buttonText = value;
                 labelButton.Text = value;
+            }
+        }
+
+        public ImageStatus Status
+        {
+            get
+            {
+                return status;
+            }
+
+            set
+            {
+                if(value == ImageStatus.clicked)
+                status = value;
             }
         }
 
@@ -53,16 +68,13 @@ namespace TabAndTab
             
             imageChange(ImageStatus.unclicked);
             
-            button.Click += new EventHandler(buttonMouseClick);
+            button.MouseDown += new MouseEventHandler(buttonMouseDown);
             button.MouseEnter += new EventHandler(buttonMouseHover);
             button.MouseHover += new EventHandler(buttonMouseHover);
             button.MouseLeave += new EventHandler(buttonMouseLeave);
-            labelButton.Click += new EventHandler(buttonMouseClick);
+            labelButton.MouseDown += new MouseEventHandler(buttonMouseDown);
             labelButton.MouseEnter += new EventHandler(buttonMouseHover);
             labelButton.MouseHover += new EventHandler(buttonMouseHover);
-
-            button.MouseDown += buttonMouseDown;
-            labelButton.MouseDown += buttonMouseDown;
         }
 
         public TabButton(string text) : this()
@@ -74,7 +86,7 @@ namespace TabAndTab
         {
             if (status == ImageStatus.clicked)
             {
-                imageStatus = ImageStatus.clicked;
+                this.status = ImageStatus.clicked;
 
                 button.Image = imageClicked;
                 button.Height = imageClicked.Height;
@@ -85,7 +97,7 @@ namespace TabAndTab
             }
             else if(status == ImageStatus.unclicked)
             {
-                imageStatus = ImageStatus.unclicked;
+                this.status = ImageStatus.unclicked;
 
                 button.Image = imageUnclicked;
                 button.Height = imageUnclicked.Height;
@@ -94,7 +106,7 @@ namespace TabAndTab
             }
             else if(status == ImageStatus.hover)
             {
-                imageStatus = ImageStatus.hover;
+                this.status = ImageStatus.hover;
 
                 button.Image = imageHover;
                 button.Height = imageHover.Height;
@@ -103,31 +115,27 @@ namespace TabAndTab
             }
         }
 
-        private void buttonMouseClick(object sender, EventArgs e)
+        private void buttonMouseDown(object sender, MouseEventArgs e)
         {
-            this.OnClick(e);
-            if (imageStatus == ImageStatus.unclicked || imageStatus == ImageStatus.hover)
+            if (status == ImageStatus.unclicked || status == ImageStatus.hover)
             {
                 imageChange(ImageStatus.clicked);
             }
+            this.OnMouseDown(e);
         }
         private void buttonMouseLeave(object sender, EventArgs e)
         {
-            if(imageStatus == ImageStatus.hover)
+            if(status == ImageStatus.hover)
             {
                 imageChange(ImageStatus.unclicked);
             }
         }
         private void buttonMouseHover(object sender, EventArgs e)
         {
-            if (imageStatus == ImageStatus.unclicked)
+            if (status == ImageStatus.unclicked)
             {
                 imageChange(ImageStatus.hover);
             }
-        }
-        private void buttonMouseDown(object sender, MouseEventArgs e)
-        {
-            this.OnMouseDown(e);
         }
     }
 }

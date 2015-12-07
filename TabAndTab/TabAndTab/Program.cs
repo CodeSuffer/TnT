@@ -16,7 +16,8 @@ namespace TabAndTab
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new BrowserForm());
+            new BrowserForm().Show();
+            Application.Run();
         }
     }
 }

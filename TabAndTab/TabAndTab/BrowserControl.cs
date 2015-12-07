@@ -68,9 +68,13 @@ namespace TabAndTab
             browsers.Remove(origin);
             browsers.Insert(indexChanged, origin);
         }
-        public int getIndex(Browser arg)
+        public int GetIndex(Browser arg)
         {
             return browsers.IndexOf(arg);
+        }
+        public Browser GetBrowser(int index)
+        {
+            return browsers.ElementAt(index);
         }
     }
 }

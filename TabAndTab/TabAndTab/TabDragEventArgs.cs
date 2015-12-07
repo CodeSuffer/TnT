@@ -10,7 +10,6 @@ namespace TabAndTab
     public class TabDragEventArgs : EventArgs
     {
         private Point location;
-        private TabButton data;
         private int tabIndex;
 
         public Point Location
@@ -65,22 +64,8 @@ namespace TabAndTab
             }
         }
 
-        public TabButton Data
+        public TabDragEventArgs(int X, int Y, int tabIndex) : base()
         {
-            get
-            {
-                return data;
-            }
-
-            set
-            {
-                data = value;
-            }
-        }
-
-        public TabDragEventArgs(TabButton data, int X, int Y, int tabIndex) : base()
-        {
-            this.Data = data;
             this.X = X;
             this.Y = Y;
             this.tabIndex = tabIndex;

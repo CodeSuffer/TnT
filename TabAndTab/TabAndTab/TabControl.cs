@@ -13,9 +13,10 @@ namespace TabAndTab
     public partial class TabControl : UserControl
     {
         public event EventHandler<TabEventArgs> OnTabOrderChange;
-        public event EventHandler<TabEventArgs> OnTabClick;
+        public event EventHandler<TabEventArgs> OnTabMouseDown;
         public event EventHandler<TabDragEventArgs> OnTabDraggedOut;
         public event DragEventHandler OnBrowserDragEnter;
+        public event MouseEventHandler OnOneTabDragged;
 
         static private int tabMarginLeft = 5;
         private List<TabButton> tabs = new List<TabButton>();
@@ -55,54 +56,48 @@ namespace TabAndTab
 
         private void Tab_DragEnter(object sender, DragEventArgs e)
         {
-            if (!e.Data.GetDataPresent(typeof(TabButton))) return;
-            TabButton data = (TabButton)e.Data.GetData(typeof(TabButton));
+            if (!e.Data.GetDataPresent(typeof(TabIndex))) return;
+            int originIndex = (TabIndex)e.Data.GetData(typeof(TabIndex));
+            TabButton data = tabs.ElementAt(originIndex);
+
             if (data == (TabButton)sender) return;
             TabButton target = (TabButton)sender;
-
-            int originIndex = tabs.IndexOf(data);
             int targetIndex = tabs.IndexOf(target);
+
             tabs.Remove(data);
             tabs.Insert(targetIndex, data);
 
+            e.Data.SetData(typeof(TabIndex), new TabIndex(targetIndex));
             this.TabRefresh();
             OnTabOrderChange(sender, new TabEventArgs(originIndex, targetIndex));
         }
 
         private void TabControl_DragOver(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(typeof(TabButton))) e.Effect = DragDropEffects.Move;
+            if (e.Data.GetDataPresent(typeof(TabIndex))) e.Effect = DragDropEffects.Move;
         }
 
 
         private void TabControl_DragEnter(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(typeof(TabButton)))
+            if (e.Data.GetDataPresent(typeof(TabIndex)))
             {
-                TabButton temp = (TabButton)e.Data.GetData(typeof(TabButton));
+                int originIndex = (TabIndex)e.Data.GetData(typeof(TabIndex));
+                int targetIndex = -1;
+                TabButton temp = tabs.ElementAt(originIndex);
                 if (tabs.First() != temp && e.X < this.PointToScreen(tabs.First().Location).X)  //left of tabs
-                {
-                    int originIndex = tabs.IndexOf(temp);
-                    int targetIndex = 0;
-
-                    tabs.Remove(temp);
-                    tabs.Insert(targetIndex, temp);
-
-                    this.TabRefresh();
-
-                    OnTabOrderChange(sender, new TabEventArgs(originIndex, targetIndex));
-                }
+                    targetIndex = 0;
                 else if (tabs.Last() != temp && e.X > this.PointToScreen(tabs.Last().Location).X + tabs.Last().Size.Width) //right of tabs
+                    targetIndex = tabs.Count - 1;
+
+                if (targetIndex != -1)
                 {
-                    int originIndex = tabs.IndexOf(temp);
-                    int targetIndex = tabs.Count - 1;
                     tabs.Remove(temp);
                     tabs.Insert(targetIndex, temp);
 
                     this.TabRefresh();
 
                     OnTabOrderChange(sender, new TabEventArgs(originIndex, targetIndex));
-
                 }
             }
             else if(e.Data.GetDataPresent(typeof(Browser))){
@@ -127,7 +122,7 @@ namespace TabAndTab
                 tabs.Remove(tab);
                 this.Controls.Remove(tab);
                 TabRefresh();
-                TabDragEventArgs dragEvent = new TabDragEventArgs(tab, mousePoint.X, mousePoint.Y, index);
+                TabDragEventArgs dragEvent = new TabDragEventArgs(mousePoint.X, mousePoint.Y, index);
                 
                 tab.QueryContinueDrag -= Tab_QueryContinueDrag;
                 e.Action = DragAction.Cancel;
@@ -137,23 +132,21 @@ namespace TabAndTab
 
         private void Tab_MouseDown(object sender, MouseEventArgs e)
         {
-            if(sender is TabButton)
+            if (tabs.Count > 1)
             {
-                Tab_Click(sender, e);
+                int index = tabs.IndexOf((TabButton)sender);
+                TabEventArgs tabEvent = new TabEventArgs(index);
+
+                this.OnTabMouseDown(sender, tabEvent);
 
                 TabButton tabButton = (TabButton)sender;
                 var effect = tabButton.DoDragDrop(
-                    tabButton, DragDropEffects.All);
+                    new TabIndex(tabs.IndexOf(tabButton)), DragDropEffects.All);
             }
-        }
-
-        private void Tab_Click(object sender, EventArgs e)
-        {
-            int index = tabs.IndexOf((TabButton)sender);
-
-            TabEventArgs tabEvent = new TabEventArgs(index);
-
-            this.OnTabClick(sender, tabEvent);
+            else
+            {
+                this.OnOneTabDragged(sender, e);
+            }
         }
 
         private void TabRefresh()

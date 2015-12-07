@@ -23,14 +23,15 @@ namespace TabAndTab
             }
         }
 
-        TabIndex(int index)
+        public TabIndex(int index)
         {
             this.index = index;
         }
 
         public static implicit operator int(TabIndex i)
         {
-            return i.Index;
+            if (i == null) return -1;
+            else return i.Index;
         }
     }
 }
