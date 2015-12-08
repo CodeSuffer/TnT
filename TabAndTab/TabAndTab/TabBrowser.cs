@@ -16,6 +16,19 @@ namespace TabAndTab
         private BrowserControl browserControl = new BrowserControl();
         private TabControl tabControl = new TabControl();
 
+        public TabControl TabControl
+        {
+            get
+            {
+                return tabControl;
+            }
+
+            set
+            {
+                tabControl = value;
+            }
+        }
+
         public TabBrowser()
         {
             InitializeComponent();
@@ -26,7 +39,6 @@ namespace TabAndTab
             tabControl.OnTabMouseDown += TabControl_MouseDown;
             tabControl.OnTabOrderChange += TabControl_OrderChange;
             tabControl.OnTabDraggedOut += TabControl_DraggedOut;
-            tabControl.OnBrowserDragEnter += TabControl_BrowserDragEnter;
             tabControl.OnOneTabDragged += TabControl_OneTabDragged;
         }
 
@@ -36,26 +48,26 @@ namespace TabAndTab
             AddBrowser(arg);
         }
 
-        private void TabControl_BrowserDragEnter(object sender, DragEventArgs e)
+        public void BrowserIn(Browser arg)
         {
-            Browser temp = (Browser)e.Data.GetData(typeof(Browser));
+            TabBrowser temp = ((BrowserForm)arg.FindForm()).TabBrowser;
+            Form tempForm = arg.FindForm();
+            this.AddBrowser(arg);
+            tempForm.Close();
             
-            this.AddBrowser(temp);
-            
-            int index = browserControl.GetIndex(temp);
+            int index = browserControl.GetIndex(arg);
             browserControl.ShowBrowser(index);
             tabControl.ShowTab(index);
-            
             tabControl.GetTab(index).DoDragDrop(new TabIndex(index), DragDropEffects.Move);
         }
-        
+
         private void TabControl_DraggedOut(object sender, TabDragEventArgs e)
         {
             Browser temp = browserControl.PopBrowser(e.TabIndex);
             BrowserForm browserForm = new BrowserForm(temp);
             browserForm.Show();
             ((BrowserForm)temp.FindForm()).TabBrowser.FormFollowMouse();
-            //temp.DoDragDrop(temp, DragDropEffects.Copy);
+            temp.DoDragDrop(temp, DragDropEffects.Copy);
 
         }
 

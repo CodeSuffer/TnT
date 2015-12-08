@@ -22,16 +22,46 @@ namespace TabAndTab
             browsers.Add(arg);
             arg.Location = new Point(0, 0);
             arg.Dock = DockStyle.Fill;
+            arg.QueryContinueDrag += Browser_QueryContinueDrag;
             this.Controls.Add(arg);
         }
+
         public void AddBrowser(string arg)
         {
             Browser temp = new Browser(arg);
             browsers.Add(temp);
             temp.Location = new Point(0, 0);
             temp.Dock = DockStyle.Fill;
+            temp.QueryContinueDrag += Browser_QueryContinueDrag;
             this.Controls.Add(temp);
         }
+
+        private void Browser_QueryContinueDrag(object sender, QueryContinueDragEventArgs e)
+        {
+            foreach (BrowserForm it in Application.OpenForms)
+            {
+                if (it == ((Browser)sender).FindForm()) continue;
+
+                TabControl target = it.TabBrowser.TabControl;
+
+                int left = target.PointToScreen(new Point(0, 0)).X;
+                int right = left + target.Size.Width;
+                int top = target.PointToScreen(new Point(0, 0)).Y;
+                int bottom = top + target.Size.Height;
+                Point mousePoint = Control.MousePosition;
+
+                if (left < mousePoint.X //dragged out
+                    && mousePoint.X < right
+                    && top < mousePoint.Y
+                    && mousePoint.Y < bottom)
+                {
+                    browsers.Remove((Browser)sender);
+                    this.Controls.Remove((Browser)sender);
+                    it.TabBrowser.BrowserIn((Browser)sender);
+                }
+            }
+        }
+
         public Browser PopBrowser(int index)
         {
             Browser origin = browsers.ElementAt(index);

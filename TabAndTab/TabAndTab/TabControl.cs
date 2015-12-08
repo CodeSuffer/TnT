@@ -121,8 +121,16 @@ namespace TabAndTab
                 int index = tabs.IndexOf(tab);
                 tabs.Remove(tab);
                 this.Controls.Remove(tab);
+                TabDragEventArgs dragEvent = new TabDragEventArgs(mousePoint.X, mousePoint.Y, index); // drag info
+
+                TabButton temp = tabs.ElementAtOrDefault(index);
+                if (temp == null)
+                {
+                    temp = tabs.ElementAtOrDefault(--index);
+                }
+                if (temp != null) this.ShowTab(index);
+
                 TabRefresh();
-                TabDragEventArgs dragEvent = new TabDragEventArgs(mousePoint.X, mousePoint.Y, index);
                 
                 tab.QueryContinueDrag -= Tab_QueryContinueDrag;
                 e.Action = DragAction.Cancel;
