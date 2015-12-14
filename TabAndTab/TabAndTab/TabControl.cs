@@ -84,8 +84,8 @@ namespace TabAndTab
 
         private void Tab_OnClickX(object sender, EventArgs e)
         {
-            this.RemoveTab(sender as TabButton);
             if (this.OnTabCloseButtonClick != null) this.OnTabCloseButtonClick(sender, new TabIndex(tabs.IndexOf(sender as TabButton)));
+            this.RemoveTab(sender as TabButton);
         }
 
         private void Tab_DragEnter(object sender, DragEventArgs e)
@@ -219,12 +219,16 @@ namespace TabAndTab
             {
                 temp = tabs.ElementAtOrDefault(--index);
             }
-            if (temp != null) this.ShowTab(index);
-            else
+            if (temp == null)
             {
                 if(this.NoTabExist != null) this.NoTabExist(tab);
+
+                TabRefresh();
+                return;
             }
 
+            this.ShowTab(index);
+            this.
             TabRefresh();
         }
     }
