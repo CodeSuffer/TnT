@@ -118,16 +118,15 @@ namespace TabAndTab
         private void Explorer_DocumentTitleChanged(object sender, EventArgs e)
         {
             this.Title = ((WebBrowser)sender).DocumentTitle;
-            this.Address = ((WebBrowser)sender).Url.AbsolutePath;
             if (onTitleChanging != null) onTitleChanging(((CustomWebBrowser)sender).ParentControl, ((WebBrowser)sender).DocumentTitle);
+            this.Address = (sender as WebBrowser).Url.AbsolutePath;
         }
 
         private void TextBoxAddress_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                Address = textBoxAddress.Text;
-                this.AddressChanging(address);
+                this.AddressChanging(textBoxAddress.Text);
             }
         }
 
@@ -138,7 +137,6 @@ namespace TabAndTab
 
         public Browser(string address) : this()
         {
-            Address = address;
             this.AddressChanging(address);
         }
 
@@ -161,26 +159,24 @@ namespace TabAndTab
                 Uri uri = new Uri(address);
                 if (!uri.IsFile) throw new System.UriFormatException();
                 this.explorer.Url = uri;
+                Address = address;
                 return true;
             }
             catch (System.UriFormatException)
             {
                 this.explorer.DocumentText = "잘못된 페이지 입니다.";
+                Address = "Wrong Page";
                 return false;
             }
         }
 
         public void GoBack()
         {
-            if (!this.explorer.CanGoBack) return;
-
             this.explorer.GoBack();
         }
 
         public void GoForward()
         {
-            if (!this.explorer.CanGoForward) return;
-
             this.explorer.GoForward();
         }
 
