@@ -1,4 +1,9 @@
-﻿using System;
+﻿/* Code By Codesuffer */
+/* Computer Science 20143035 */
+/* To OSS Team Project */
+/* Class for TabIndex. (just replace int) */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

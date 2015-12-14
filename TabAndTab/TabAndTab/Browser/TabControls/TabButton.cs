@@ -1,4 +1,9 @@
-﻿using System;
+﻿/* Code By Codesuffer */
+/* Computer Science 20143035 */
+/* To OSS Team Project */
+/* Class for control a tab button */
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;

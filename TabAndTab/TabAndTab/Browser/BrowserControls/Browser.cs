@@ -1,4 +1,9 @@
-﻿using System;
+﻿/* Code By Codesuffer */
+/* Computer Science 20143035 */
+/* To OSS Team Project */
+/* Class for control a browser */
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -36,7 +41,6 @@ namespace TabAndTab
         public event EventHandler<string> onTitleChanging;
         static private int splitterPos = 151;
         private WebBrowser explorer;
-        LeftFavoritesBar leftFavoritesBar;
 
         private string address;
         public string Address
@@ -73,8 +77,6 @@ namespace TabAndTab
             InitializeComponent();
             this.explorer = new CustomWebBrowser(this);
             this.explorer.Dock = DockStyle.Fill;
-            leftFavoritesBar = new LeftFavoritesBar();
-            browserSplitContainer.Panel1.Controls.Add(leftFavoritesBar);
             browserSplitContainer.Paint += BrowserSplitContainer_Paint;
             browserSplitContainer.SplitterMoving += BrowserSplitter_Moving;
             browserSplitContainer.Panel2.Controls.Add(this.explorer);
@@ -87,8 +89,20 @@ namespace TabAndTab
             buttonForward.Click += ButtonForward_Click;
             this.buttonContainer.Panel1.Controls.Add(buttonForward);
             this.menuContainer.Add(buttonForward);
-
             RefreshMenu();
+
+            treeView.Tree.NodeMouseDoubleClick += Tree_NodeMouseDoubleClick;
+        }
+
+        private void Tree_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            try {
+                explorer.Url = new Uri((e.Node.Tag as ShellItem).Path);
+            }
+            catch
+            {
+
+            }
         }
 
         private void ButtonForward_Click(object sender, EventArgs e)

@@ -1,4 +1,9 @@
-﻿using System;
+﻿/* Code By Codesuffer */
+/* Computer Science 20143035 */
+/* To OSS Team Project */
+/* Class for TabButton Drag Event arguments */
+
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;

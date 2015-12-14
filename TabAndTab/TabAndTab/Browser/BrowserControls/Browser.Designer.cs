@@ -32,6 +32,7 @@
             this.buttonContainer = new System.Windows.Forms.SplitContainer();
             this.textBoxAddress = new System.Windows.Forms.TextBox();
             this.browserSplitContainer = new System.Windows.Forms.SplitContainer();
+            this.treeView = new TabAndTab.ExplorerTreeView();
             ((System.ComponentModel.ISupportInitialize)(this.addressSplitContainer)).BeginInit();
             this.addressSplitContainer.Panel1.SuspendLayout();
             this.addressSplitContainer.Panel2.SuspendLayout();
@@ -40,6 +41,7 @@
             this.buttonContainer.Panel2.SuspendLayout();
             this.buttonContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.browserSplitContainer)).BeginInit();
+            this.browserSplitContainer.Panel1.SuspendLayout();
             this.browserSplitContainer.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -97,6 +99,10 @@
             this.browserSplitContainer.Location = new System.Drawing.Point(0, 0);
             this.browserSplitContainer.MinimumSize = new System.Drawing.Size(450, 300);
             this.browserSplitContainer.Name = "browserSplitContainer";
+            // 
+            // browserSplitContainer.Panel1
+            // 
+            this.browserSplitContainer.Panel1.Controls.Add(this.treeView);
             this.browserSplitContainer.Panel1MinSize = 150;
             this.browserSplitContainer.Panel2MinSize = 300;
             this.browserSplitContainer.Size = new System.Drawing.Size(631, 401);
@@ -104,6 +110,15 @@
             this.browserSplitContainer.SplitterWidth = 1;
             this.browserSplitContainer.TabIndex = 1;
             this.browserSplitContainer.TabStop = false;
+            // 
+            // treeView
+            // 
+            this.treeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView.Location = new System.Drawing.Point(0, 0);
+            this.treeView.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.treeView.Name = "treeView";
+            this.treeView.Size = new System.Drawing.Size(151, 401);
+            this.treeView.TabIndex = 0;
             // 
             // Browser
             // 
@@ -120,6 +135,7 @@
             this.buttonContainer.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.buttonContainer)).EndInit();
             this.buttonContainer.ResumeLayout(false);
+            this.browserSplitContainer.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.browserSplitContainer)).EndInit();
             this.browserSplitContainer.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -132,5 +148,6 @@
         private System.Windows.Forms.SplitContainer browserSplitContainer;
         private System.Windows.Forms.SplitContainer buttonContainer;
         private System.Windows.Forms.TextBox textBoxAddress;
+        private ExplorerTreeView treeView;
     }
 }

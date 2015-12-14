@@ -1,4 +1,9 @@
-﻿using System;
+﻿/* Code By Codesuffer */
+/* Computer Science 20143035 */
+/* To OSS Team Project */
+/* Class for low level mouse hooking */
+
+using System;
 using System.Drawing;
 using System.Reflection;
 using System.Runtime.InteropServices;
