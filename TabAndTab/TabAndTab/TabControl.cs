@@ -24,6 +24,7 @@ namespace TabAndTab
 
         static private int tabMarginLeft = 1;
         private List<TabButton> tabs = new List<TabButton>();
+        private ImageButton addTabButton = new ImageButton(Properties.Resources.button_add_mouseup, Properties.Resources.button_add_clicked, Properties.Resources.button_add, Properties.Resources.button_add, "");
 
         public int Count
         {
@@ -39,6 +40,13 @@ namespace TabAndTab
             this.DragEnter += TabControl_DragEnter;
             this.DragOver += TabControl_DragOver;
             this.AllowDrop = true;
+            this.Controls.Add(addTabButton);
+            this.addTabButton.Click += AddTabButton_Click;
+        }
+
+        private void AddTabButton_Click(object sender, EventArgs e)
+        {
+            ((sender as Control).FindForm() as BrowserForm).TabBrowser.AddBrowser(@"C:\");
         }
 
         public TabButton GetTab(int index)
@@ -187,6 +195,17 @@ namespace TabAndTab
             {
                 tabs[i].Location = new Point(tabMarginLeft + i * (tabs[i].Size.Width - 1), this.Height - this.tabs[i].Size.Height);
             }
+
+            int width = 0;
+            if(tabs.Count != 0)
+            {
+                width = tabMarginLeft + tabs.Count * (tabs[0].Size.Width - 1);
+            }
+            else
+            {
+                width = 0;
+            }
+            addTabButton.Location = new Point(width + 5, 3);
         }
 
         public void RemoveTab(TabButton tab)

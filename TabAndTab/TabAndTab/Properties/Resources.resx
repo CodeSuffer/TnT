@@ -124,6 +124,15 @@
   <data name="browser_go_forward" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\browser_go_forward.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="button_add" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\button_add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="button_add_clicked" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\button_add_clicked.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="button_add_mouseup" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\button_add_mouseup.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="button_x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\button_x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

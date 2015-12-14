@@ -36,6 +36,7 @@ namespace TabAndTab
         public event EventHandler<string> onTitleChanging;
         static private int splitterPos = 151;
         private WebBrowser explorer;
+        LeftFavoritesBar leftFavoritesBar;
 
         private string address;
         public string Address
@@ -52,6 +53,8 @@ namespace TabAndTab
             }
         }
 
+        private string title;
+
         public string Title
         {
             get
@@ -64,14 +67,14 @@ namespace TabAndTab
                 title = value;
             }
         }
-
-        private string title;
-
+        
         public Browser()
         {
             InitializeComponent();
             this.explorer = new CustomWebBrowser(this);
             this.explorer.Dock = DockStyle.Fill;
+            leftFavoritesBar = new LeftFavoritesBar();
+            browserSplitContainer.Panel1.Controls.Add(leftFavoritesBar);
             browserSplitContainer.Paint += BrowserSplitContainer_Paint;
             browserSplitContainer.SplitterMoving += BrowserSplitter_Moving;
             browserSplitContainer.Panel2.Controls.Add(this.explorer);

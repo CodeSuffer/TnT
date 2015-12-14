@@ -32,7 +32,6 @@
             this.buttonContainer = new System.Windows.Forms.SplitContainer();
             this.textBoxAddress = new System.Windows.Forms.TextBox();
             this.browserSplitContainer = new System.Windows.Forms.SplitContainer();
-            this.leftFavoritesBar1 = new TabAndTab.LeftFavoritesBar();
             ((System.ComponentModel.ISupportInitialize)(this.addressSplitContainer)).BeginInit();
             this.addressSplitContainer.Panel1.SuspendLayout();
             this.addressSplitContainer.Panel2.SuspendLayout();
@@ -41,7 +40,6 @@
             this.buttonContainer.Panel2.SuspendLayout();
             this.buttonContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.browserSplitContainer)).BeginInit();
-            this.browserSplitContainer.Panel1.SuspendLayout();
             this.browserSplitContainer.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -70,6 +68,7 @@
             // buttonContainer
             // 
             this.buttonContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.buttonContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
             this.buttonContainer.IsSplitterFixed = true;
             this.buttonContainer.Location = new System.Drawing.Point(0, 0);
             this.buttonContainer.Name = "buttonContainer";
@@ -98,10 +97,6 @@
             this.browserSplitContainer.Location = new System.Drawing.Point(0, 0);
             this.browserSplitContainer.MinimumSize = new System.Drawing.Size(450, 300);
             this.browserSplitContainer.Name = "browserSplitContainer";
-            // 
-            // browserSplitContainer.Panel1
-            // 
-            this.browserSplitContainer.Panel1.Controls.Add(this.leftFavoritesBar1);
             this.browserSplitContainer.Panel1MinSize = 150;
             this.browserSplitContainer.Panel2MinSize = 300;
             this.browserSplitContainer.Size = new System.Drawing.Size(631, 401);
@@ -109,15 +104,6 @@
             this.browserSplitContainer.SplitterWidth = 1;
             this.browserSplitContainer.TabIndex = 1;
             this.browserSplitContainer.TabStop = false;
-            // 
-            // leftFavoritesBar1
-            // 
-            this.leftFavoritesBar1.AllowDrop = true;
-            this.leftFavoritesBar1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.leftFavoritesBar1.Location = new System.Drawing.Point(0, 0);
-            this.leftFavoritesBar1.Name = "leftFavoritesBar1";
-            this.leftFavoritesBar1.Size = new System.Drawing.Size(151, 401);
-            this.leftFavoritesBar1.TabIndex = 0;
             // 
             // Browser
             // 
@@ -134,7 +120,6 @@
             this.buttonContainer.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.buttonContainer)).EndInit();
             this.buttonContainer.ResumeLayout(false);
-            this.browserSplitContainer.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.browserSplitContainer)).EndInit();
             this.browserSplitContainer.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -145,7 +130,6 @@
 
         private System.Windows.Forms.SplitContainer addressSplitContainer;
         private System.Windows.Forms.SplitContainer browserSplitContainer;
-        private LeftFavoritesBar leftFavoritesBar1;
         private System.Windows.Forms.SplitContainer buttonContainer;
         private System.Windows.Forms.TextBox textBoxAddress;
     }
