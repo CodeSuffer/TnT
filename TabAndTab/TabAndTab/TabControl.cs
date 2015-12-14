@@ -12,20 +12,33 @@ namespace TabAndTab
 {
     public partial class TabControl : UserControl
     {
+        public delegate void TabSelectHandler(object sender, TabIndex e);
         public event EventHandler<TabEventArgs> OnTabOrderChange;
         public event EventHandler<TabEventArgs> OnTabMouseDown;
+        public event TabSelectHandler OnTabCloseButtonClick;
         public event EventHandler<TabDragEventArgs> OnTabDraggedOut;
         public event DragEventHandler OnBrowserDragEnter;
         public event MouseEventHandler OnOneTabDragged;
+        public delegate void NothingHandler(object sender);
+        public event NothingHandler NoTabExist;
 
-        static private int tabMarginLeft = 5;
+        static private int tabMarginLeft = 1;
         private List<TabButton> tabs = new List<TabButton>();
+
+        public int Count
+        {
+            get
+            {
+                return tabs.Count;
+            }
+        }
 
         public TabControl()
         {
             InitializeComponent();
             this.DragEnter += TabControl_DragEnter;
             this.DragOver += TabControl_DragOver;
+            this.AllowDrop = true;
         }
 
         public TabButton GetTab(int index)
@@ -37,9 +50,15 @@ namespace TabAndTab
         {
             foreach (TabButton it in tabs)
             {
-                it.imageChange(TabButton.ImageStatus.unclicked);
+                it.imageChange(ImageButton.ImageStatus.unclicked);
             }
-            tabs[index].imageChange(TabButton.ImageStatus.clicked);
+            tabs[index].imageChange(ImageButton.ImageStatus.clicked);
+        }
+
+        public void SetTabText(int index, string text)
+        {
+            TabButton tab = tabs.ElementAt(index);
+            tab.ButtonText = text;
         }
         
         public void AddNewTab(string directory)
@@ -48,10 +67,17 @@ namespace TabAndTab
             tab.MouseDown += Tab_MouseDown;
             tab.DragEnter += Tab_DragEnter;
             tab.DragOver += TabControl_DragOver;
-            tab.QueryContinueDrag += Tab_QueryContinueDrag;
+            tab.OnClickX += Tab_OnClickX;
             tabs.Add(tab);
             this.Controls.Add(tab);
             TabRefresh();
+            tab.QueryContinueDrag += Tab_QueryContinueDrag;
+        }
+
+        private void Tab_OnClickX(object sender, EventArgs e)
+        {
+            this.RemoveTab(sender as TabButton);
+            if (this.OnTabCloseButtonClick != null) this.OnTabCloseButtonClick(sender, new TabIndex(tabs.IndexOf(sender as TabButton)));
         }
 
         private void Tab_DragEnter(object sender, DragEventArgs e)
@@ -101,11 +127,16 @@ namespace TabAndTab
                 }
             }
             else if(e.Data.GetDataPresent(typeof(Browser))){
-                this.OnBrowserDragEnter(sender, e);
+                if(OnBrowserDragEnter != null) OnBrowserDragEnter(sender, e);
+            }
+            else if(e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
             }
         }
         private void Tab_QueryContinueDrag(object sender, QueryContinueDragEventArgs e)
         {
+            if (tabs.Count == 1) return;
             int left = this.PointToScreen(this.Location).X;
             int right = left + this.Size.Width;
             int top = this.PointToScreen(this.Location).Y;
@@ -119,16 +150,9 @@ namespace TabAndTab
             {
                 TabButton tab = (TabButton)sender;
                 int index = tabs.IndexOf(tab);
-                tabs.Remove(tab);
-                this.Controls.Remove(tab);
                 TabDragEventArgs dragEvent = new TabDragEventArgs(mousePoint.X, mousePoint.Y, index); // drag info
 
-                TabButton temp = tabs.ElementAtOrDefault(index);
-                if (temp == null)
-                {
-                    temp = tabs.ElementAtOrDefault(--index);
-                }
-                if (temp != null) this.ShowTab(index);
+                RemoveTab(tab);
 
                 TabRefresh();
                 
@@ -161,8 +185,28 @@ namespace TabAndTab
         {
             for (int i = 0; i < tabs.Count; i++)
             {
-                tabs[i].Location = new Point(tabMarginLeft + i * 109, 0);
+                tabs[i].Location = new Point(tabMarginLeft + i * (tabs[i].Size.Width - 1), this.Height - this.tabs[i].Size.Height);
             }
+        }
+
+        public void RemoveTab(TabButton tab)
+        {
+            int index = tabs.IndexOf(tab);
+            tabs.Remove(tab);
+            this.Controls.Remove(tab);
+
+            TabButton temp = tabs.ElementAtOrDefault(index);
+            if (temp == null)
+            {
+                temp = tabs.ElementAtOrDefault(--index);
+            }
+            if (temp != null) this.ShowTab(index);
+            else
+            {
+                if(this.NoTabExist != null) this.NoTabExist(tab);
+            }
+
+            TabRefresh();
         }
     }
 }

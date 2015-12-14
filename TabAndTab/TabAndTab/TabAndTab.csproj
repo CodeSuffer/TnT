@@ -71,6 +71,12 @@
     <Compile Include="BrowserForm.Designer.cs">
       <DependentUpon>BrowserForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ImageButton.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ImageButton.Designer.cs">
+      <DependentUpon>ImageButton.cs</DependentUpon>
+    </Compile>
     <Compile Include="LeftFavoritesBar.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -109,6 +115,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="BrowserForm.resx">
       <DependentUpon>BrowserForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImageButton.resx">
+      <DependentUpon>ImageButton.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LeftFavoritesBar.resx">
       <DependentUpon>LeftFavoritesBar.cs</DependentUpon>
@@ -149,6 +158,21 @@
     <None Include="Resources\tab_unclicked.png" />
     <None Include="Resources\tab_mouseup.png" />
     <None Include="Resources\tab_clicked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\browser_go_back.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\browser_go_forward.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button_x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button_x_click.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\button_x_hover.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -45,7 +45,7 @@
             this.tabSpliter.Size = new System.Drawing.Size(613, 420);
             this.tabSpliter.SplitterDistance = 26;
             this.tabSpliter.SplitterWidth = 1;
-            this.tabSpliter.TabIndex = 0;
+            this.tabSpliter.TabIndex = 2;
             this.tabSpliter.TabStop = false;
             // 
             // TabBrowser

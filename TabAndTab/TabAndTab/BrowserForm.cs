@@ -27,18 +27,6 @@ namespace TabAndTab
             }
         }
 
-        public BrowserForm()
-        {
-            this.FormClosed += BrowserForm_FormClosed;
-            InitializeComponent();
-            tabBrowser = new TabBrowser();
-            tabBrowser.Dock = DockStyle.Fill;
-            tabBrowser.AddBrowser("111111");
-            tabBrowser.AddBrowser("222222");
-            tabBrowser.AddBrowser("333333");
-            this.menuSplitContainer.Panel2.Controls.Add(tabBrowser);
-        }
-
         private void BrowserForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (Application.OpenForms.Count == 0)
@@ -49,14 +37,50 @@ namespace TabAndTab
             MouseHookManager.UnSetHook();
         }
 
-        public BrowserForm(Browser arg)
+        public BrowserForm(Browser arg = null)
         {
             this.FormClosed += BrowserForm_FormClosed;
             InitializeComponent();
-            tabBrowser = new TabBrowser();
+            if(arg != null) tabBrowser = new TabBrowser(arg);
             tabBrowser.Dock = DockStyle.Fill;
-            tabBrowser.AddBrowser(arg);
-            this.menuSplitContainer.Panel2.Controls.Add(tabBrowser);
+            this.Controls.Add(tabBrowser);
+        }
+
+        public BrowserForm(string arg) : this(new Browser(arg))
+        {
+        }
+
+        public void FormFollowMouse()
+        {
+            MouseHookManager.UnSetHook();
+            MouseHookManager.OnMouseProc += MouseHookManager_OnMouseProc;
+            MouseHookManager.OnMouseLeftUp += MouseHookManager_OnMouseLeftUp;
+            MouseHookManager.SetHook();
+        }
+
+        private void MouseHookManager_OnMouseProc(Point mouse)
+        {
+            Form temp = this.FindForm();
+            if (temp == null)
+            {
+                MouseHookManager.OnMouseProc -= MouseHookManager_OnMouseProc;
+                MouseHookManager.OnMouseLeftUp -= MouseHookManager_OnMouseLeftUp;
+                return;
+            }
+            this.FormMoveToMouse();
+        }
+
+        private void MouseHookManager_OnMouseLeftUp(Point mouse)
+        {
+            MouseHookManager.UnSetHook();
+            MouseHookManager.OnMouseProc -= MouseHookManager_OnMouseProc;
+            MouseHookManager.OnMouseLeftUp -= MouseHookManager_OnMouseLeftUp;
+        }
+
+        public void FormMoveToMouse()
+        {
+            Point mousePoint = new Point(Control.MousePosition.X, Control.MousePosition.Y);
+            this.FindForm().Location = new Point(mousePoint.X - 80, mousePoint.Y - 50);
         }
     }
 }

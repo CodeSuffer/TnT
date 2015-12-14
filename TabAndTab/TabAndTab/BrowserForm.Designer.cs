@@ -28,50 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.menuSplitContainer = new System.Windows.Forms.SplitContainer();
-            ((System.ComponentModel.ISupportInitialize)(this.menuSplitContainer)).BeginInit();
-            this.menuSplitContainer.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // menuSplitContainer
-            // 
-            this.menuSplitContainer.CausesValidation = false;
-            this.menuSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.menuSplitContainer.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.menuSplitContainer.IsSplitterFixed = true;
-            this.menuSplitContainer.Location = new System.Drawing.Point(0, 0);
-            this.menuSplitContainer.Name = "menuSplitContainer";
-            this.menuSplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // menuSplitContainer.Panel1
-            // 
-            this.menuSplitContainer.Panel1.BackColor = System.Drawing.SystemColors.Control;
-            this.menuSplitContainer.Panel1MinSize = 50;
-            this.menuSplitContainer.Panel2MinSize = 325;
-            this.menuSplitContainer.Size = new System.Drawing.Size(590, 401);
-            this.menuSplitContainer.SplitterDistance = 51;
-            this.menuSplitContainer.SplitterWidth = 1;
-            this.menuSplitContainer.TabIndex = 0;
-            this.menuSplitContainer.TabStop = false;
             // 
             // BrowserForm
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(590, 401);
-            this.Controls.Add(this.menuSplitContainer);
+            this.ClientSize = new System.Drawing.Size(836, 502);
             this.Name = "BrowserForm";
             this.Text = "TabBrowser";
-            ((System.ComponentModel.ISupportInitialize)(this.menuSplitContainer)).EndInit();
-            this.menuSplitContainer.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.SplitContainer menuSplitContainer;
     }
 }
 

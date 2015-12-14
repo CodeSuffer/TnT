@@ -15,7 +15,6 @@ namespace TabAndTab
     {
         private BrowserControl browserControl = new BrowserControl();
         private TabControl tabControl = new TabControl();
-
         public TabControl TabControl
         {
             get
@@ -26,6 +25,19 @@ namespace TabAndTab
             set
             {
                 tabControl = value;
+            }
+        }
+
+        public BrowserControl BrowserControl
+        {
+            get
+            {
+                return browserControl;
+            }
+
+            set
+            {
+                browserControl = value;
             }
         }
 
@@ -40,24 +52,48 @@ namespace TabAndTab
             tabControl.OnTabOrderChange += TabControl_OrderChange;
             tabControl.OnTabDraggedOut += TabControl_DraggedOut;
             tabControl.OnOneTabDragged += TabControl_OneTabDragged;
+            tabControl.DragDrop += TabControl_DragDrop;
+            tabControl.NoTabExist += TabControl_NoTabExist;
+            tabControl.OnTabCloseButtonClick += TabControl_OnTabCloseButtonClick;
+            browserControl.onTitleChanging += BrowserControl_onTitleChanging;
         }
 
+        private void TabControl_OnTabCloseButtonClick(object sender, TabIndex e)
+        {
+            if((sender as Control).FindForm() != null) browserControl.PopBrowser(e);
+        }
+
+        private void TabControl_NoTabExist(object sender)
+        {
+            this.FindForm().Close();
+        }
 
         public TabBrowser(Browser arg) : this()
         {
-            AddBrowser(arg);
+            this.AddBrowser(arg);
+        }
+
+        public TabBrowser(string arg) : this()
+        {
+            this.AddBrowser(arg);
+        }
+
+        private void BrowserControl_onTitleChanging(object sender, int index, string title)
+        {
+            BrowserForm tempForm = (sender as Control).FindForm() as BrowserForm;
+            tempForm.TabBrowser.tabControl.SetTabText(index, title);
         }
 
         public void BrowserIn(Browser arg)
         {
-            TabBrowser temp = ((BrowserForm)arg.FindForm()).TabBrowser;
             Form tempForm = arg.FindForm();
+            arg.QueryContinueDrag -= Browser_QueryContinueDrag;
             this.AddBrowser(arg);
-            tempForm.Close();
             
-            int index = browserControl.GetIndex(arg);
-            browserControl.ShowBrowser(index);
+            int index = this.browserControl.GetIndex(arg);
+            this.browserControl.ShowBrowser(index);
             tabControl.ShowTab(index);
+            tempForm.Close();
             tabControl.GetTab(index).DoDragDrop(new TabIndex(index), DragDropEffects.Move);
         }
 
@@ -66,28 +102,49 @@ namespace TabAndTab
             Browser temp = browserControl.PopBrowser(e.TabIndex);
             BrowserForm browserForm = new BrowserForm(temp);
             browserForm.Show();
-            ((BrowserForm)temp.FindForm()).TabBrowser.FormFollowMouse();
+            ((BrowserForm)temp.FindForm()).FormFollowMouse();
+            temp.QueryContinueDrag += Browser_QueryContinueDrag;
             temp.DoDragDrop(temp, DragDropEffects.Copy);
-
         }
 
-        private void MouseHookManager_OnMouseProc(Point mouse)
+        private void Browser_QueryContinueDrag(object sender, QueryContinueDragEventArgs e)
         {
-            Form temp = this.FindForm();
-            if (temp == null)
+            try
             {
-                MouseHookManager.OnMouseProc -= MouseHookManager_OnMouseProc;
-                MouseHookManager.OnMouseLeftUp -= MouseHookManager_OnMouseLeftUp;
-                return;
+                BrowserForm tempForm = (sender as Control).FindForm() as BrowserForm;
+                foreach (BrowserForm it in Application.OpenForms)
+                {
+                    if (it == tempForm) continue;
+                    TabControl target = it.TabBrowser.TabControl;
+
+                    int left = target.PointToScreen(new Point(0, 0)).X;
+                    int right = left + target.Size.Width;
+                    int top = target.PointToScreen(new Point(0, 0)).Y;
+                    int bottom = top + target.Size.Height;
+                    Point mousePoint = Control.MousePosition;
+
+                    if (left < mousePoint.X //dragged out
+                        && mousePoint.X < right
+                        && top < mousePoint.Y
+                        && mousePoint.Y < bottom)
+                    {
+                        it.TabBrowser.BrowserIn((Browser)sender);
+                        tempForm.TabBrowser.browserControl.PopBrowser(tempForm.TabBrowser.browserControl.GetIndex((Browser)sender));
+                        ((Browser)sender).QueryContinueDrag -= Browser_QueryContinueDrag;
+                    }
+                }
             }
-            Point mousePoint = new Point(mouse.X, mouse.Y);
-            temp.Location = new Point(mousePoint.X - 60, mousePoint.Y - 105);
+            catch (System.InvalidOperationException)
+            {
+                Browser_QueryContinueDrag(sender, e);
+            }
         }
 
         private void TabControl_OneTabDragged(object sender, MouseEventArgs e)
         {
             Browser temp = browserControl.GetBrowser(0);
-            ((BrowserForm)temp.FindForm()).TabBrowser.FormFollowMouse();
+            ((BrowserForm)temp.FindForm()).FormFollowMouse();
+            temp.QueryContinueDrag += Browser_QueryContinueDrag;
             temp.DoDragDrop(temp, DragDropEffects.Copy);
         }
 
@@ -99,34 +156,37 @@ namespace TabAndTab
         private void TabControl_MouseDown(object sender, TabEventArgs e)
         {
             int index = e.TabIndex;
-            tabControl.ShowTab(index);
-            browserControl.ShowBrowser(index);
+            this.ShowPage(index);
+        }
+
+        private void TabControl_DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] temp = (string[])e.Data.GetData(DataFormats.FileDrop);
+                foreach (string filename in temp)
+                {
+                    this.AddBrowser(filename);
+                }
+            }
         }
 
         public void AddBrowser(Browser arg)
         {
             browserControl.AddBrowser(arg);
-            tabControl.AddNewTab(arg.Address);
+            tabControl.AddNewTab(arg.Title);
+            ShowPage(browserControl.GetIndex(arg));
         }
         public void AddBrowser(string address)
         {
-            browserControl.AddBrowser(address);
-            tabControl.AddNewTab(address);
+            this.AddBrowser(new Browser(address));
         }
 
-        private void FormFollowMouse()
+        public void ShowPage(int index)
         {
-            MouseHookManager.UnSetHook();
-            MouseHookManager.OnMouseProc += MouseHookManager_OnMouseProc;
-            MouseHookManager.OnMouseLeftUp += MouseHookManager_OnMouseLeftUp;
-            MouseHookManager.SetHook();
+            tabControl.ShowTab(index);
+            browserControl.ShowBrowser(index);
         }
 
-        private void MouseHookManager_OnMouseLeftUp(Point mouse)
-        {
-            MouseHookManager.OnMouseProc -= MouseHookManager_OnMouseProc;
-            MouseHookManager.OnMouseLeftUp -= MouseHookManager_OnMouseLeftUp;
-            MouseHookManager.UnSetHook();
-        }
     }
 }

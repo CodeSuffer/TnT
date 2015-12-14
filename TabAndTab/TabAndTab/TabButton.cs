@@ -18,41 +18,27 @@ namespace TabAndTab
         static private Image imageHover;
         static private Image imageClicked;
         static private Image imageUnclicked;
-        private ImageStatus status;
-        private string buttonText;
+        static private Image imageXHover;
+        static private Image imageXClicked;
+        static private Image imageXUnclicked;
+
+        private ImageButton button;
+        private ImageButton buttonX;
+
+        public event EventHandler OnClickX;
 
         //properties
         public string ButtonText
         {
             get
             {
-                return buttonText;
+                return button.ButtonText;
             }
 
             set
             {
-                buttonText = value;
-                labelButton.Text = value;
+                button.ButtonText = value;
             }
-        }
-
-        public ImageStatus Status
-        {
-            get
-            {
-                return status;
-            }
-
-            set
-            {
-                if(value == ImageStatus.clicked)
-                status = value;
-            }
-        }
-
-        public enum ImageStatus
-        {
-            clicked, unclicked, hover
         }
 
         static TabButton()
@@ -60,82 +46,49 @@ namespace TabAndTab
             imageHover = Properties.Resources.tab_mouseup;
             imageClicked = Properties.Resources.tab_clicked;
             imageUnclicked = Properties.Resources.tab_unclicked;
+            imageXHover = Properties.Resources.button_x_hover;
+            imageXClicked = Properties.Resources.button_x_click;
+            imageXUnclicked = Properties.Resources.button_x;
         }
 
         public TabButton()
         {
             InitializeComponent();
-            
-            imageChange(ImageStatus.unclicked);
-            
-            button.MouseDown += new MouseEventHandler(buttonMouseDown);
-            button.MouseEnter += new EventHandler(buttonMouseHover);
-            button.MouseHover += new EventHandler(buttonMouseHover);
-            button.MouseLeave += new EventHandler(buttonMouseLeave);
-            labelButton.MouseDown += new MouseEventHandler(buttonMouseDown);
-            labelButton.MouseEnter += new EventHandler(buttonMouseHover);
-            labelButton.MouseHover += new EventHandler(buttonMouseHover);
+
+            this.Height = imageClicked.Height;
+            this.Width = imageClicked.Width;
+
+            button = new ImageButton(imageHover, imageClicked, imageUnclicked, "");
+            button.Location = new Point(0, 0);
+            this.Controls.Add(button);
+            buttonX = new ImageButton(imageXHover, imageXClicked, imageXUnclicked, imageXUnclicked, "");
+            buttonX.Location = new Point(this.Width - imageXClicked.Width - 5, 5);
+            this.Controls.Add(buttonX);
+            buttonX.BringToFront();
+
+            button.MouseDown += Button_MouseDown;
+            buttonX.Click += ButtonX_Click;
+        }
+
+        private void ButtonX_Click(object sender, EventArgs e)
+        {
+            if (OnClickX != null) OnClickX(this, e);
+        }
+
+        private void Button_MouseDown(object sender, MouseEventArgs e)
+        {
+            OnMouseDown(e);
         }
 
         public TabButton(string text) : this()
         {
+            button.ButtonText = text;
             ButtonText = text;
         }
 
-        public void imageChange(ImageStatus status)
+        public void imageChange(ImageButton.ImageStatus status)
         {
-            if (status == ImageStatus.clicked)
-            {
-                this.status = ImageStatus.clicked;
-
-                button.Image = imageClicked;
-                button.Height = imageClicked.Height;
-                button.Width = imageClicked.Width;
-                button.Location = new Point(0, 0);
-
-                this.BringToFront();
-            }
-            else if(status == ImageStatus.unclicked)
-            {
-                this.status = ImageStatus.unclicked;
-
-                button.Image = imageUnclicked;
-                button.Height = imageUnclicked.Height;
-                button.Width = imageUnclicked.Width;
-                button.Location = new Point(0, 2);
-            }
-            else if(status == ImageStatus.hover)
-            {
-                this.status = ImageStatus.hover;
-
-                button.Image = imageHover;
-                button.Height = imageHover.Height;
-                button.Width = imageHover.Width;
-                button.Location = new Point(0, 2);
-            }
-        }
-
-        private void buttonMouseDown(object sender, MouseEventArgs e)
-        {
-            if (status == ImageStatus.unclicked || status == ImageStatus.hover)
-            {
-                imageChange(ImageStatus.clicked);
-            }
-            this.OnMouseDown(e);
-        }
-        private void buttonMouseLeave(object sender, EventArgs e)
-        {
-            if(status == ImageStatus.hover)
-            {
-                imageChange(ImageStatus.unclicked);
-            }
-        }
-        private void buttonMouseHover(object sender, EventArgs e)
-        {
-            if (status == ImageStatus.unclicked)
-            {
-                imageChange(ImageStatus.hover);
-            }
+            button.imageChange(status);
         }
     }
 }
